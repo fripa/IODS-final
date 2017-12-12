@@ -11,3 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## IODS final assignment 
+For the final assingment I have chosen to use the Learning2014 data set and Logistic regression.
+
+#### Data wrnangling. 
+THe data wrangling is computed in a R Script, wich can be found at 

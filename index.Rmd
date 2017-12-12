@@ -1,7 +1,8 @@
 ---
-title: "index.Rmd"
+title: "Final assignment"
 author: "Frida Gyllenberg"
 date: "12 Dec 2017"
+email: frida.gyllenberg@gmail.com
 output: html_document
 ---
 

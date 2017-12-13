@@ -32,7 +32,14 @@ OR = (e ^(α+β*smoking=1) / (e ^(α+β*smoking=0)) = (e ^α* e ^(β*smoking=1) 
 * The observations are independent
 
 ## The data
-```{r reading in data}
+```{r libraries and reading in data, echo=FALSE, include=FALSE}
+#libraries
+library(tidyverse)
+library(ggplot2)
+library(GGally)
+library(corrplot)
+library(stats)
+#reading in data
 learn <- readRDS("learn.Rds")
 learn %>% glimpse 
 ```

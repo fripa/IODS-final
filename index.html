@@ -148,6 +148,40 @@ $(document).ready(function () {
 </div>
 <div id="the-data" class="section level2">
 <h2>The data</h2>
+<pre class="r"><code>#libraries
+library(tidyverse)</code></pre>
+<pre><code>## Loading tidyverse: ggplot2
+## Loading tidyverse: tibble
+## Loading tidyverse: tidyr
+## Loading tidyverse: readr
+## Loading tidyverse: purrr
+## Loading tidyverse: dplyr</code></pre>
+<pre><code>## Conflicts with tidy packages ----------------------------------------------</code></pre>
+<pre><code>## filter(): dplyr, stats
+## lag():    dplyr, stats</code></pre>
+<pre class="r"><code>library(ggplot2)
+library(GGally)</code></pre>
+<pre><code>## 
+## Attaching package: 'GGally'</code></pre>
+<pre><code>## The following object is masked from 'package:dplyr':
+## 
+##     nasa</code></pre>
+<pre class="r"><code>library(corrplot)</code></pre>
+<pre><code>## corrplot 0.84 loaded</code></pre>
+<pre class="r"><code>library(stats)
+#reading in data
+learn &lt;- readRDS(&quot;learn.Rds&quot;)
+learn %&gt;% glimpse </code></pre>
+<pre><code>## Observations: 166
+## Variables: 8
+## $ gender      &lt;fctr&gt; F, M, F, M, M, F, M, F, M, F, M, F, F, F, M, F, F...
+## $ Age         &lt;int&gt; 53, 55, 49, 53, 49, 38, 50, 37, 37, 42, 37, 34, 34...
+## $ Attitude    &lt;int&gt; 37, 31, 25, 35, 37, 38, 35, 29, 38, 21, 39, 38, 24...
+## $ deep        &lt;dbl&gt; 3.583333, 2.916667, 3.500000, 3.500000, 3.666667, ...
+## $ stra        &lt;dbl&gt; 3.375, 2.750, 3.625, 3.125, 3.625, 3.625, 2.250, 4...
+## $ surf        &lt;dbl&gt; 2.583333, 3.166667, 2.250000, 2.250000, 2.833333, ...
+## $ Points      &lt;int&gt; 25, 12, 24, 10, 22, 21, 21, 31, 24, 26, 31, 31, 23...
+## $ high_points &lt;lgl&gt; TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, TRU...</code></pre>
 </div>
 
 

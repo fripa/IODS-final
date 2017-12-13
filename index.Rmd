@@ -32,7 +32,7 @@ OR = (e ^(α+β*smoking=1) / (e ^(α+β*smoking=0)) = (e ^α* e ^(β*smoking=1) 
 * The observations are independent
 
 ## The data
-```{r libraries and reading in data, echo=TRUE, include=FALSE}
+```{r libraries and reading in data}
 #libraries
 library(tidyverse)
 library(ggplot2)

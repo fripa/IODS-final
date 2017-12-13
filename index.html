@@ -124,8 +124,27 @@ $(document).ready(function () {
 </div>
 
 
-<div id="iods-final-assignment" class="section level2">
-<h2>IODS final assignment</h2>
+<p>For the final assingment I have chosen to use the Learning2014 data set and Logistic regression.</p>
+<div id="data-wrangling" class="section level4">
+<h4>Data wrangling</h4>
+<p>The data wrangling is computed in an R Script, wich can be found at <a href="https://github.com/fripa/IODS-final/blob/master/data_wrangling.R" class="uri">https://github.com/fripa/IODS-final/blob/master/data_wrangling.R</a> The data wranlging includes computing some explanatory variables by joining together variables from the same dimensions, and creating a binary outcome variable.</p>
+</div>
+<div id="logistic-regression" class="section level2">
+<h2>Logistic regression</h2>
+<p>Logistic regression is used to assess the relationship between a set of discrete or continuous explanatory variables and a binary outcome variable, where the observations should be independent of each other. As the outcome variable is binary, we need to transform it to be able to assign an appropriate equation, hence we used the log odds of the outcome. The log odds of the outcome can be written as “ln(p/1- p)” and the logistic regression equation as “α + β1<em>X1 + β2</em>X2+ β3*X3…&quot; depending on how many explanatory variables are included in the model.</p>
+<p>Examples of a study question where logistic regression is usuful is e.g. how smoking is related to lung cancer (equation: ln (odds of lung cancer) = α + β1<em>(smoking, yes/no)), which we can further adjust by age (ln (odds of lung cancer) = α + β1</em>(smoking, yes/no) + β2*(age)).</p>
+<p>The results are presented as odds ratios, i.e the odds of lung cancer given that the person smokes divided by the odds of lung cancer given that the person does not smoke. Basic algebra then gives us that the exponate of the beta estimate equals the odds ratio as</p>
+<p>OR = (e ^(α+β<em>smoking=1) / (e ^(α+β</em>smoking=0)) = (e ^α* e ^(β<em>smoking=1) / (e ^α</em> e ^(β<em>smoking=0) = e ^(β</em>smoking=1)</p>
+<div id="major-assumption-of-logistic-regression" class="section level4">
+<h4>Major assumption of Logistic regression</h4>
+<ul>
+<li>The dependent variable should be binary</li>
+<li>There should be no outliers in the data</li>
+<li>There should be no high correlations (multicollinearity) among the predictors.<br />
+</li>
+<li>The observations are independent</li>
+</ul>
+</div>
 </div>
 
 

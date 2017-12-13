@@ -10,8 +10,29 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## IODS final assignment 
 For the final assingment I have chosen to use the Learning2014 data set and Logistic regression.
 
-#### Data wrnangling. 
-THe data wrangling is computed in a R Script, wich can be found at 
+#### Data wrangling
+The data wrangling is computed in an R Script, wich can be found at https://github.com/fripa/IODS-final/blob/master/data_wrangling.R
+The data wranlging includes computing some explanatory variables by joining together variables from the same dimensions, and creating a binary outcome variable. 
+
+## Logistic regression
+Logistic regression is used to assess the relationship between a set of discrete or continuous explanatory variables and a binary outcome variable, where the observations should be independent of each other. As the outcome variable is binary, we need to transform it to be able to assign an appropriate equation, hence we used the log odds of the outcome. The log odds of the outcome can be written as "ln(p/1- p)" and the logistic regression equation as "α + β1*X1 + β2*X2+ β3*X3..." depending on how many explanatory variables are included in the model.
+
+Examples of a study question where logistic regression is usuful is e.g. how smoking is related to lung cancer (equation: ln (odds of lung cancer) = α + β1*(smoking, yes/no)), which we can further adjust by age (ln (odds of lung cancer) = α + β1*(smoking, yes/no) + β2*(age)).
+
+The results are presented as odds ratios, i.e the odds of lung cancer given that the person smokes divided by the odds of lung cancer given that the person does not smoke. Basic algebra then gives us that the exponate of the beta estimate equals the odds ratio as
+
+OR = (e ^(α+β*smoking=1) / (e ^(α+β*smoking=0)) = (e ^α* e ^(β*smoking=1) / (e ^α* e ^(β*smoking=0) = e ^(β*smoking=1) 
+
+#### Major assumption of Logistic regression
+* The dependent variable should be binary
+* There should be no outliers in the data 
+* There should be no high correlations (multicollinearity) among the predictors.  
+* The observations are independent
+
+## The data
+```{r reading in data}
+learn <- readRDS("learn.Rds")
+learn %>% glimpse 
+```

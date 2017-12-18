@@ -1,7 +1,7 @@
 ---
 title: "Final assignment"
 author: "Frida Gyllenberg"
-date: "12 Dec 2017"
+date: "18 Dec 2017"
 email: frida.gyllenberg@gmail.com
 output: html_document
 ---
@@ -10,7 +10,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-For the final assingment I have chosen to use the Learning2014 data set and Logistic regression.
+For the final assingment I chose to use the Learning2014 data set and Logistic regression.
 
 #### Data wrangling
 The data wrangling is computed in an R Script, wich can be found at https://github.com/fripa/IODS-final/blob/master/data_wrangling.R
@@ -32,14 +32,103 @@ OR = (e ^(α+β*smoking=1) / (e ^(α+β*smoking=0)) = (e ^α* e ^(β*smoking=1) 
 * The observations are independent
 
 ## The data
-```{r libraries and reading in data}
+The data I used is a subset from the Learning2014 data set. The original data was gathered by Kimmo Vehkalahti during the course "Introduction to Social Statistics", during fall 2014. It consists of 60 variables, of which the first 56 are qeastions answered by the students. Background variables consists of Age and Gender, and the data set also includes the Final exam points and a computed Attitude variable, that is a sum variable of the 10 questions concerning the students attitude towards statistics.
+
+For this assignement I have merged data from the individual questions into the dimension-variables of surface learnign, deep learning and strategic learning, and dropped the individual questions. Also, I have created a binary variable of Points, where I have defined points above the median as "high" and points below median as "low". 
+
+The data set thus have 8 variables of 166 observations, i.e. students. There are 110 females and 56 males, their mean age is 25.5 and the mean score in the exam is 22.7. The proportion of males having high points is slightly larger than females having a high score. Let us look closer on this relationship.
+
+```{r libraries and reading in data, echo=FALSE, include=FALSE}
 #libraries
 library(tidyverse)
 library(ggplot2)
 library(GGally)
 library(corrplot)
 library(stats)
+library(dplyr)
+```
+
+```{r}
 #reading in data
 learn <- readRDS("learn.Rds")
+#dimensions and summary
 learn %>% glimpse 
+learn %>% summary
 ```
+#### Graphical overview, excluding the binary high_points variable
+```{r}
+p <- ggpairs(learn, 
+             columns = c(1:3, 7),
+             title ="Students age, attitude towards statistics and exam points by gender",
+             mapping = aes(col=gender, alpha=0.3), 
+             lower = list(combo = wrap("facethist", bins = 20)))
+p
+```
+
+
+From this graphical overview by sex (female=pink) it seems that Attitude towards statistics has a strong positive correlation with exam points of euqual size in both makes and females. Age  has a slight negative correlation to exam points, and this correlation is stronger among males.  
+####cross-tabulation of high points by gender
+```{r}
+table(high_points=learn$high_points, gender=learn$gender)
+```
+Of the 110 females, 47 (i.e. 43 %) scored above the median, while 50 % of males scored above the median points.
+
+## Analysis
+For the analysis, I used logistic regression to assess the relationship between gender; age; attitude towards statistics; three different learning dimensions described as strategic, surface and deep learning, and points in the final exam. 
+
+```{r}
+m <- glm(learn$high_points ~ learn$Age, family = "binomial")
+
+summary(m)
+OR<-coef(m) %>% exp
+CI<-confint(m) %>% exp
+cbind(OR,CI)
+
+m2 <- glm(learn$high_points ~ learn$Age + learn$gender, family = "binomial")
+
+summary(m2)
+OR2<-coef(m2) %>% exp
+CI2<-confint(m2) %>% exp
+cbind(OR2,CI2)
+
+m3 <- glm(learn$high_points ~ learn$Age + learn$gender + learn$Attitude, family = "binomial")
+
+summary(m3)
+OR3<-coef(m3) %>% exp
+CI3<-confint(m3) %>% exp
+cbind(OR3,CI3)
+```
+Age does not have any correlation with scoring above the median points. In the second model, with only age and gender, male gender seemed to increase the odds for high points, although it was not significant. After including Attitude as an explanatory variable, the OR for male gender interestingly decresased below 1, but still was not significant. 
+
+On the contrary, Attitude showed a significant correlation with high points, with an OR of 1.13 (96% CI 1.07, 1.20), implying that higher attittude towards statistics is linked to higher points in the exam. 
+
+```{r}
+m4 <- glm(learn$high_points ~ learn$Age + learn$gender + learn$Attitude + learn$deep+learn$stra+learn$surf, family = "binomial")
+
+summary(m4)
+OR4<-coef(m4) %>% exp
+CI4<-confint(m4) %>% exp
+cbind(OR4,CI4)
+```
+Adding the varialbles on dimensions on learning did not alter the estimates and ORs for age, gender or attitude. Deep learning seemed to associate with scoring below median with a significant OR of 0.30 (95 % CI 0.13, 0.61), strategic learning had a significatn OR of 1.63 (95 % CI 1.01, 2.71), but surface learning showd no signoificanse in the relation towards points (OR 0.62 [95 % CI 0.31, 1.35]).
+
+#### Predicition
+Next, I wanted to look closer onto how well this model predicts the real data.
+pred_prob <- predict(m, type = "response")
+```{r} 
+probabilities <- predict(m4, type = "response")
+learn <- mutate(learn, probability=probabilities)
+# using the new variable probabilites to make a prediction of high points
+learn<-mutate(learn, prediction = probability > 0.5)
+table(high_points = learn$high_points, prediction = learn$prediction)
+```
+With the prediction of FALSE, 25 observations are still true, and wiht the prediction TRUE,  24 observations are false. I.e. in 49 out of 166 observations, this model does not give the correct prediction. 
+
+## Conclusion
+With this brief analysis, I found that Attitude towards statistics and knowledge of strategic learning are the most important features to associate with points highe than the median point on the final exam of a statsitics course. Moreover, in this course I have learned to use the version control program Git integrated in the R Studio, learned a lot about visualisation in R and learned not to be afraid of what feels new and uncomfortable.
+
+Thank You all, both Kimmo and all of Kimmos assistants!
+
+Best regards,
+
+Frida

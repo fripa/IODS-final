@@ -1,5 +1,6 @@
 #### Data wrangling for final assignment ####
-#Frida Gyllenberg, december 13th, 2017
+#Frida Gyllenberg, december 18th, 2017
+# frida.gyllenberg@gmail.com
 
 # libraries
 library(tidyverse)
@@ -13,7 +14,7 @@ learning <- read.table("http://www.helsinki.fi/~kvehkala/JYTmooc/JYTOPKYS3-data.
 
 learning %>% glimpse # the data looks ok, no problems reading in
 learning %>% dim # 183 observations and 60 variables, i.e. a lot of variables
-learning %>% str # all variables are intergerns except gender that is an binary factor variable
+learning %>% str  # all variables are intergerns except gender that is an binary factor variable
 
 ## to make the data more easy to comprehend, I will start with computing new variables out of the different topics of questions, by first selecting all columns measuring the same dimension and then creating a new variable as a mean of these columns. This was done earlier in the course.
 
@@ -46,10 +47,10 @@ dim(learn) # 166 observations of 7 variables
 colnames(learn)
 learn %>% glimpse
 
-## For the logistic regression I need to compute a binary outcome variable. I choose to make a new logical column "high_points", by computing first the average and then defining everything above average as high and everything below average as low. 
+## For the logistic regression I need to compute a binary outcome variable. I choose to make a new logical column "high_points", by computing first the median and then defining everything above median as high and everything equaling to or below median as low. 
 
-learn$Points %>% mean##22.7
-learn <- mutate(learn, high_points = Points > 22)
+learn$Points %>% median##23
+learn <- mutate(learn, high_points = Points > 23)
 
 #I can now use this data to ananlyse the relationsship of both binary and continous explanatory variables on the binary outcome of scoring high or low points in the exam.
 

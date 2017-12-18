@@ -9,12 +9,15 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+## Abstract
+The aim of this final assingement was to achieve in-depth learning of the skills I learned during the Open Data Science Course at the University of Helsinki, fall 2017. I investigated the relationship between age, gender, and some variables describing students attitudes and learning habits on exam points. Of this explanatory variables, only Attitude and Strategic learning showed a significant positive relationship with points higher than the median score.
 
-For the final assingment I chose to use the Learning2014 data set and Logistic regression.
+## Hypothesis
+For the final assingment I chose to use the Learning2014 data set and Logistic regression. I am intrested in looking at which explanatory ariables that associates with the outcome of having hifgher points than the median points.
 
 #### Data wrangling
 The data wrangling is computed in an R Script, wich can be found at https://github.com/fripa/IODS-final/blob/master/data_wrangling.R
-The data wranlging includes computing some explanatory variables by joining together variables from the same dimensions, and creating a binary outcome variable. 
+The data wranlging includes computing some explanatory variables by joining together variables from the same dimensions, and creating a binary outcome variable needed for the logistic regression. 
 
 ## Logistic regression
 Logistic regression is used to assess the relationship between a set of discrete or continuous explanatory variables and a binary outcome variable, where the observations should be independent of each other. As the outcome variable is binary, we need to transform it to be able to assign an appropriate equation, hence we used the log odds of the outcome. The log odds of the outcome can be written as "ln(p/1- p)" and the logistic regression equation as "α + β1*X1 + β2*X2+ β3*X3..." depending on how many explanatory variables are included in the model.
